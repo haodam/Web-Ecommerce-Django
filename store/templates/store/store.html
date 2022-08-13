@@ -1,0 +1,90 @@
+{% extends 'store/main.html' %}
+
+{% load static %}
+
+{% block content %}
+    <div class="row">
+        {% for product in products %}
+        <div class="col-lg-4">
+            <img class="thumbnail" src="{{product.imageURL}}">
+            <div class="box-element product">
+                <h6> <strong>{{product.name}}</strong></h6>
+                <hr>
+                <button data-product={{product.id}} data-action="add" 
+                class="btn btn-outline-secondary add-btn update-cart">Add to Cart</button>
+                <a class="btn btn-outline-success" href="#">View</a>
+                <h4 style="display: inline-block; float:right"><strong>
+                    ${{product.price|floatformat:2}}</strong></h4>
+            </div>
+        </div>
+        {% endfor %}
+
+        <div class="col-lg-4">
+            <img class="thumbnail" src="{% static 'images/placeholder.png'%}">
+            <div class="box-element product">
+                <h6> <strong>Product</strong></h6>
+                <hr>
+                <button class="btn btn-outline-secondary add-btn">Add to Cart</button>
+                <a class="btn btn-outline-success" href="#">View</a>
+                <h4 style="display: inline-block; float: right"><strong>$50</strong></h4>
+                
+            </div>
+        </div>
+
+        <div class="col-lg-4">
+            <img class="thumbnail" src="{% static 'images/placeholder.png'%}">
+            <div class="box-element product">
+                <h6> <strong>Product</strong></h6>
+                <hr>
+                <button class="btn btn-outline-secondary add-btn">Add to Cart</button>
+                <a class="btn btn-outline-success" href="#">View</a>
+                <h4 style="display: inline-block; float: right"><strong>$80</strong></h4>
+
+            </div>
+        </div>
+    </div>
+
+    <nav aria-label="Page navigation example">
+        <ul class="pagination">
+          {% if page_obj.has_previous %}
+              <li class="page-item">
+                <a class="page-link" href="?page={{ page_obj.previous_page_number }}" aria-label="Previous">
+                  <span aria-hidden="true">&lsaquo; Previous</span>
+                </a>
+              </li> 
+          {% else %}
+              <li class="page-item disabled">
+                <a class="page-link" href="#" aria-label="Previous">
+                  <span aria-hidden="true">&lsaquo; Previous</span>
+                </a>
+              </li>
+          {% endif %}
+  
+          {% for page_index in page_obj.paginator.num_pages %}
+              {% if page_index == page_obj.number  %}
+                  <li class="page-item active" aria-current="page">  <!--kiem tra dang dung o trang page hien tai -->
+                    <a class="page-link" href="?page={{ page_index }}">{{ page_index }}</a>
+                  </li>             
+              {% else %}
+                  <li class="page-item">
+                    <a class="page-link" href="?page={{ page_index }}">{{ page_index }}</a>
+                  </li>         
+              {% endif %}           
+          {% endfor %}
+          {% if page_obj.has_next %}
+              <li class="page-item">
+                <a class="page-link" href="?page={{ page_obj.next_page_number }}" aria-label="Next">
+                  <span aria-hidden="true">Next &rsaquo;</span>
+                </a>
+              </li> 
+          {% else %}
+              <li class="page-item disabled">
+                <a class="page-link" href="#" aria-label="Next">
+                  <span aria-hidden="true">Next &rsaquo;</span>
+                </a>
+              </li>
+          {% endif %}
+        </ul>
+      </nav>
+    
+{% endblock content %}
